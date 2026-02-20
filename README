@@ -1,0 +1,174 @@
+📌 AI-Powered Intrusion Detection & Prevention System (IDS-IPS)
+
+An AI-based cybersecurity system that detects and prevents malicious network
+activity using Machine Learning.
+The system supports both offline analysis (CSV) and real-time live network
+monitoring, with an interactive visualization dashboard.
+
+🚀 Project Overview
+
+This project implements a complete Intrusion Detection System (IDS) combined
+with an Intrusion Prevention System (IPS) using Machine Learning.
+
+The system:
+
+=> Detects network attacks using a trained Random Forest model
+=> Prevents suspicious activity using a lightweight IPS logic
+=> Supports two modes:
+    => File Mode (CSV / Dataset)
+    => Live Mode (Real packet capture)
+=> Displays real-time monitoring through a Streamlit dashboard
+=> Maintains security logs
+=> Provides visual analytics (graphs, counters, charts)
+
+🧠 Machine Learning Model
+
+=> Dataset used: NSL-KDD
+=> Features: 41 network features
+=> Model: Random Forest Classifier
+=> Preprocessing: StandardScaler
+=> Attack Classes:
+    => DoS (Denial of Service)
+    => Probe (Scanning / Reconnaissance)
+    => R2L (Remote to Local)
+    => U2R (User to Root)
+
+
+Saved model files:
+* ids_model.pkl
+* scaler.pkl
+
+🛡️ System Architecture
+           ┌──────────────┐
+           │   Frontend   │
+           │ Streamlit UI │
+           └──────┬───────┘
+                  │
+                  ▼
+           ┌──────────────┐
+           │   Backend    │
+           │ ML + IPS     │
+           └──────┬───────┘
+                  │
+      ┌───────────┼───────────┐
+      ▼                       ▼
+ File Mode                Live Mode
+ (CSV Streaming)       (Packet Capture)
+      ▼                       ▼
+ Detection (ML) → Prevention (IPS) → Logging → Visualization
+
+⚙️ Features
+
+IDS (Detection):
+
+=> Detects multiple attack types using ML
+=> Works on offline and live traffic
+=> Real-time prediction
+
+IPS (Prevention):
+
+=> Blocks repeated malicious patterns
+=> Maintains prevention memory
+=> Logs actions to security_log.csv
+
+Modes:
+
+* File Mode → Upload CSV → Detect + Prevent
+* Live Mode → Capture real network packets → Detect + Prevent
+
+Dashboard:
+
+=> Real-time monitoring
+=> Start / Stop control
+=> Attack distribution chart
+=> Live activity timeline
+=> Blocked vs Allowed counters
+=> Security logs
+
+📂 Project Structure
+ids/
+│
+├── ids_dashboard.py        # Streamlit UI
+├── ids_model.pkl           # Trained ML model
+├── scaler.pkl              # StandardScaler
+├── nsl_kdd_test.csv        # Sample dataset
+│
+├── backend/
+│   ├── model_loader.py
+│   ├── predictor.py
+│   ├── ips_engine.py
+│   ├── logger.py
+│   ├── stream_processor.py
+│   └── live_capture.py
+│
+├── logs/
+│   └── security_log.csv
+│
+└── README.md
+
+🖥️ Installation
+1. Clone repository
+git clone https://github.com/yourusername/ai-ids-ips.git
+cd ai-ids-ips
+2. Install dependencies
+pip install streamlit scikit-learn pandas numpy plotly joblib scapy
+3. Install Npcap (Windows only for live mode)
+Download from: https://npcap.com/#download
+Enable WinPcap compatibility mode during install.
+
+▶️ Run the Project
+python -m streamlit run ids_dashboard.py
+
+Open browser → Dashboard starts.
+
+📊 How to Use
+
+File Mode:
+1. Upload CSV file
+2. System detects attacks
+3. IPS blocks suspicious traffic
+4. Visualizations update
+
+Live Mode:
+1. Click Start Live Monitoring
+2. Open browser / generate network traffic
+3. System captures packets in real time
+4. Detection + Prevention occurs live
+5. Click Stop to pause
+
+📜 Security Logs
+
+All detected/prevented events are saved in:
+
+"logs/security_log.csv"
+
+Contains:
+
+-Timestamp
+-Attack type
+-Action (ALLOWED / BLOCKED)
+
+⚠️ Limitations
+
+=> Live mode uses lightweight feature extraction (not full flow features)
+=> Accuracy in live capture may be lower than dataset mode
+=> Not intended for production-grade deployment
+=> Designed for academic and research purposes
+
+🔮 Future Improvements
+
+=> Flow-based feature extraction (CICFlowMeter style)
+=> Real firewall blocking
+=> Email / alert notifications
+=> Advanced anomaly detection
+=> Deep learning model
+=> Cloud deployment
+
+📌 Technologies Used
+
+=> Python
+=> Scikit-learn
+=> Streamlit
+=> Scapy
+=> Pandas / NumPy
+=> Plotly
